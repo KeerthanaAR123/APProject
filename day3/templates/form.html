@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Math Quiz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap 4.6 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f0f4f8;
+            font-family: 'Rubik', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .quiz-box {
+            max-width: 700px;
+            margin: 60px auto;
+            padding: 40px;
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 600;
+            color: #007bff;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .btn-submit {
+            width: 100%;
+            font-size: 1.1rem;
+            font-weight: 600;
+            background-color: #007bff;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-box">
+    <h2>Take the Math Quiz</h2>
+    
+    <form method="POST" action="/anyname">
+        <div class="form-group">
+            <label for="name">👤 Student Name</label>
+            <input type="text" class="form-control" name="name" id="name" required>
+        </div>
+
+        {% for i in range(5) %}
+        <div class="form-group">
+            <label>Q{{ i+1 }}. {{ questions[i] }}</label>
+            <input type="hidden" name="question{{ i+1 }}" value="{{ questions[i] }}">
+            <input type="number" class="form-control" name="answer{{ i+1 }}" required>
+        </div>
+        {% endfor %}
+
+        <button type="submit" class="btn btn-primary btn-submit mt-3">Submit Quiz</button>
+    </form>
+</div>
+
+</body>
+</html>

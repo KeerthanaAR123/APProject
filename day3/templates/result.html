@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Results</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="container mt-5">
+
+    <div class="text-center mb-4">
+        <h1 class="display-4">📊 Math Quiz Results</h1>
+        <p class="lead text-muted">Here’s a snapshot of everyone’s performance</p>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="row text-center mb-4">
+        <div class="col-md-6">
+            <div class="alert alert-success shadow">
+                <h4>✅ Correct Answers</h4>
+                <p class="display-5 font-weight-bold">{{ correct_count }}</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="alert alert-danger shadow">
+                <h4>❌ Incorrect Answers</h4>
+                <p class="display-5 font-weight-bold">{{ incorrect_count }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Graph -->
+    <div class="text-center mb-5">
+        <h3>📈 Performance Chart</h3>
+        {% if plot_url %}
+            <!-- If passed as base64 -->
+            <img src="data:image/png;base64,{{ plot_url }}" class="img-fluid" alt="Performance Chart" style="max-width: 500px;">
+        {% elif graph_url %}
+            <!-- If saved as image in /static -->
+            <img src="{{ url_for('static', filename=graph_url.split('static/')[-1]) }}" class="img-fluid" alt="Performance Chart" style="max-width: 500px;">
+        {% else %}
+            <p class="text-muted">Graph not available.</p>
+        {% endif %}
+    </div>
+
+    <hr class="my-4">
+
+    <!-- Response Table -->
+    <div class="mb-5">
+        <h3> Detailed Response Table</h3>
+        <div class="table-responsive">
+            {{ table_html | safe }}
+        </div>
+    </div>
+
+</body>
+</html>
